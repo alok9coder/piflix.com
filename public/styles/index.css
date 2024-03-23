@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
+
+.index-page {    
+  font-family: "Darker Grotesque", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.index-container > form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: baseline;
+    height: 70vh;
+}
+
+.thumbnail-home > button {
+    border: none;
+    appearance: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: transparent;
+    position: relative;
+    border-radius: 10px;
+    height: 60vh;
+    width: 15vw;
+    margin-inline: 22px;
+}
+
+button > img:hover {
+    width: 14vw;
+    top: 7.5vh;
+    left: 0.7vh;
+    z-index: 1;
+    border-radius: 50%;
+    box-shadow: 2px 2px 6px 6px white;
+}
+
+.media-icon {
+    width: 12vw;
+    position: absolute;
+    top: 10vh;
+    left: 3vh;
+}
+
+.thumbnail-title {
+    color: rgb(199, 199, 199);
+    font-family: "Darker Grotesque", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    display: block;
+    position: absolute;
+    bottom: 5vh;
+    left: 1vh;
+}
+
+.thumbnail-title:hover {
+    bottom: 5vh;
+    left: 1vh;
+    font-weight: 500;
+    color: white;
+}

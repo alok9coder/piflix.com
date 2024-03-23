@@ -1,0 +1,48 @@
+<%- include("partials/header.ejs") %>
+
+<div class="index-container index-page">
+    <form action="/player" method="POST">
+        <div class="movie-thumbnail-1 thumbnail-home">
+            <button name="thumbnailSelected" value="0">
+                <img class="media-icon" src="images/Media_Player.svg.png" width="240px">
+                <h3 class="thumbnail-title">
+                    <%= content.MovieTitle1 %>
+                </h3>
+            </button>
+        </div>
+        <div class="movie-thumbnail-2 thumbnail-home">
+            <button name="thumbnailSelected" value="1">
+                <img class="media-icon" src="images/Media_Player.svg.png" width="240px">
+                <h3 class="thumbnail-title">
+                    <%= content.MovieTitle2 %>
+                </h3>
+            </button>
+        </div>
+        <div class="movie-thumbnail-3 thumbnail-home">
+            <button name="thumbnailSelected" value="2">
+                <img class="media-icon" src="images/Media_Player.svg.png" width="240px">
+                <h3 class="thumbnail-title">
+                    <%= content.MovieTitle3 %>
+                </h3>
+            </button>
+        </div>
+        <div class="movie-thumbnail-4 thumbnail-home">
+            <button name="thumbnailSelected" value="3">
+                <img class="media-icon" src="images/Media_Player.svg.png" width="240px">
+                <h3 class="thumbnail-title">
+                    <%= content.MovieTitle4 %>
+                </h3>
+            </button>
+        </div>
+        <div class="movie-thumbnail-5 thumbnail-home">
+            <button name="thumbnailSelected" value="4">
+                <img class="media-icon" src="images/Media_Player.svg.png" width="240px">
+                <h3 class="thumbnail-title">
+                    <%= content.MovieTitle5 %>
+                </h3>
+            </button>
+        </div>
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>

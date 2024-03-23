@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
+
+.movie-display-title {
+    color: rgb(155, 155, 155);
+    background-color: black;
+    border-radius: 30px;
+    padding: 5px 10px 10px 10px;
+    font-family: "Darker Grotesque", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.7rem;
+}
+
+.player-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.video-container > video {
+    border-radius: 10px;
+}

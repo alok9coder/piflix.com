@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/movies.css">
+    <link rel="stylesheet" href="styles/player.css">
+    <link rel="stylesheet" href="styles/upload.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Georama:wght@100..900&family=MuseoModerno:ital,wght@1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+    <title><%= content.pageTitle %></title>
+</head>
+<body class="container body-container">
+    <div class="header-container">
+        <a href="/home" class="website-name">
+            <% if (content.pageTitle === "piflix") { %>
+                <img src="images/Raspberry_Pi_Logo.svg.png">
+                <h1 class="website-title">piflix</h1>
+            <% } else { %>
+                <img src="images/Raspberry_Pi_Logo.svg.png">
+                <h1 class="website-title">piflix</h1>
+            <% } %>
+        </a>
+        <div class="menu">
+            <div class="main home-page">
+                <a href="/home"><h2>Home</h1></a>
+            </div>
+            <div class="movies browse-list">
+                <a href="/movies"><h2>Movies</h2></a>
+            </div>
+            <div class="upload add-movie">
+                <a href="/upload"><h2>Upload</h2></a>
+            </div>
+        </div>
+    </div>

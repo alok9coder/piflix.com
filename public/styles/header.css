@@ -1,0 +1,92 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Georama:wght@100..900&family=MuseoModerno:ital,wght@1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
+
+.website-title {
+    font-family: "Advent Pro", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 50;
+    font-style: italic;
+    font-variation-settings: "wdth" 100;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+    background-color: black;
+    border-radius: 10px;
+    height: 35vh;
+    padding-left: 20vw;
+}
+
+.website-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 0 20px;
+    height: 30vh;
+    width: 100vh;
+}
+
+.website-name:hover {
+    box-shadow: 2px 2px 6px 6px white;
+    z-index: 1;
+}
+
+.website-name > img{
+    height: 30vh;
+    margin-right: 10px;
+}
+
+.website-title {
+    height: 30vh;
+    font-size: 15rem;
+    color: #E30B5C;
+    margin-left: 10px;
+    margin-top: 30px;
+}
+
+.website-name:hover .website-title{
+    color: #6CC04A;
+}
+
+.menu {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.menu > div {
+    margin: 0 10px;
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: black;
+}
+
+.menu h2 {
+    color: #6CC04A;
+    background-color: rgb(25, 25, 25);
+    font-family: "Darker Grotesque", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.7rem;
+    padding: 0 10px 5px 10px;
+    border-radius: 10px;
+}
+
+.menu h2:hover {
+    background-color: black;
+    color:#E30B5C;
+    box-shadow: 2px 2px 6px 6px white;
+    z-index: 1;
+}

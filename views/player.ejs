@@ -1,0 +1,14 @@
+<%- include("partials/header.ejs") %>
+
+<div class="player-container">
+    <div class="video-container">
+        <video src="/mediastream" width="1080p" type="video/<%= content.movieFormat %>" controls>
+            ERROR!!! - Your Browser Does Not Support The Video Format!
+        </video>
+    </div>
+    <div>
+        <h2 class="movie-display-title"><%= content.movieTitle %></h2>
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>

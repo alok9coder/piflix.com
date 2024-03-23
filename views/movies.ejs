@@ -1,0 +1,20 @@
+<%- include("partials/header.ejs") %>
+
+<div class="movie-all-container">
+    <form action="/anotherplayer" method="POST">
+        <% if (locals.content.MovieList) { %>
+            <% for (let i = 0; i < content.MovieList.length; i++) { %>
+                <div class="movie-container">
+                    <button value="<%= i %>" name="thumbnailSelected">
+                        <video src="/home/pi/Movies/<%= content.MovieList[i] %>" width="240px"></video>
+                        <h4><%= content.MovieList[i].slice(0, 20) %>...</h4>
+                    </button>
+                </div>
+            <% } %>
+        <% } else { %>
+            <h2>No Content to Show!</h2>
+        <% } %>
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>
