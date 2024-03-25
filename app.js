@@ -82,7 +82,6 @@ app.post("/player", (req, res) => {
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
     stream.createStream();
-    stream.playMovie();
 });
 
 app.post("/anotherplayer", (req, res) => {
@@ -104,7 +103,6 @@ app.post("/anotherplayer", (req, res) => {
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
     stream.createStream();
-    stream.playMovie();
 });
 
 app.get("/movies", (req, res) => {
@@ -133,15 +131,13 @@ class MovieStream {
         this.userID = uniqueID;
         this.videoFormat = videoFormat;
         this.moviePath = moviePath;
-    }
 
-    createStream() {
         console.log(this.userID);
         console.log(this.videoFormat);
         console.log(this.moviePath);
     }
 
-    playMovie() {
+    createStream()  {
         app.get(`/mediastream/${this.userID}`, (req, res) => {
             let start = 0;
             let end = 0;
