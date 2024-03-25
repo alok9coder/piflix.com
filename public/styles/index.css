@@ -12,7 +12,27 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: baseline;
-    height: 70vh;
+    position: relative;
+    width: 80%;
+    margin-left: 0;
+}
+
+@media (min-width: 1201px) {
+    .index-page {
+        height: 80vh;
+    }
+
+    .index-container > form {
+        height: 70vh;
+    }
+
+    .thumbnail-home {
+        height: 60vh;
+    }
+
+    .thumbnail-home > button {
+        height: 60vh;
+    }
 }
 
 .thumbnail-home > button {
@@ -24,17 +44,42 @@
     align-items: center;
     justify-content: space-evenly;
     background-color: transparent;
-    position: relative;
+    position: absolute;
     border-radius: 10px;
-    height: 60vh;
     width: 15vw;
-    margin-inline: 22px;
+    margin-inline: 0;
+    margin-left: 2%;
 }
 
-button > img:hover {
+.movie-thumbnail-1 > button {
+    top: 1vh;
+    left: 0vw;
+}
+
+.movie-thumbnail-2 > button {
+    top: 1vh;
+    left: 19vw;
+}
+
+.movie-thumbnail-3 > button {
+    top: 1vh;
+    left: 39vw;
+}
+
+.movie-thumbnail-4 > button {
+    top: 1vh;
+    left: 59vw;
+}
+
+.movie-thumbnail-5 > button {
+    top: 1vh;
+    left: 79vw;
+}
+
+button:hover > .media-icon {
     width: 14vw;
     top: 7.5vh;
-    left: 0.7vh;
+    left: 0vw;
     z-index: 1;
     border-radius: 50%;
     box-shadow: 2px 2px 6px 6px white;
@@ -44,7 +89,7 @@ button > img:hover {
     width: 12vw;
     position: absolute;
     top: 10vh;
-    left: 3vh;
+    left: 1vw;
 }
 
 .thumbnail-title {
@@ -59,7 +104,7 @@ button > img:hover {
     left: 1vh;
 }
 
-.thumbnail-title:hover {
+button:hover > .thumbnail-title {
     bottom: 5vh;
     left: 1vh;
     font-weight: 500;

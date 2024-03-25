@@ -12,28 +12,41 @@
 
 .movie-all-container > form {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    min-inline-size: 1080px;
+    width: 100vw;
 }
 
 .movie-container {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    width: 240px;
     border-radius: 20px;
+}
+
+button:hover > .video-tile {
+    z-index: 1;
+    border-radius: 50%;
+    box-shadow: 2px 2px 6px 6px white;
+}
+
+button:hover > .video-tile-title {
+    z-index: 1;
+    text-shadow: 2px 2px 6px white;
 }
 
 .movie-container > button {
     color: rgb(199, 199, 199);
     background-color: transparent;
     border: none;
-    margin: 2px;
 }
 
-.movie-container:hover {
-    color: white;
-    background-color: black;
-    box-shadow: 2px 2px 6px 6px white;
-    z-index: 1;
+@media (min-width: 1201px) {
+    .movie-container > button {
+        margin: 2%;
+    }
+
+    .movie-container {
+        width: 240px;
+    }
 }

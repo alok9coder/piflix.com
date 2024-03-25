@@ -10,15 +10,39 @@
     font-variation-settings: "wdth" 100;
 }
 
-.header-container {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    justify-content: space-between;
-    background-color: black;
-    border-radius: 10px;
-    height: 35vh;
-    padding-left: 20vw;
+@media (min-width:1201px) {
+    .header-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: end;
+        justify-content: space-between;
+        background-color: black;
+        border-radius: 10px;
+        height: 35vh;
+        padding-left: 15vw;
+    }
+
+    .website-title {
+        margin-top: 30px;
+    }
+
+    .menu {
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        border-radius: 10px;
+        padding: 0 10px;
+    }
+}
+
+@media (min-width:1250px) {
+    .header-container {
+        height: 35vh;
+        padding-left: 20vw;
+    }
 }
 
 .website-name {
@@ -30,11 +54,10 @@
     border-radius: 10px;
     padding: 0 20px;
     height: 30vh;
-    width: 100vh;
 }
 
 .website-name:hover {
-    box-shadow: 2px 2px 6px 6px white;
+    text-shadow: 2px 2px 10px #6CC04A;
     z-index: 1;
 }
 
@@ -48,21 +71,11 @@
     font-size: 15rem;
     color: #E30B5C;
     margin-left: 10px;
-    margin-top: 30px;
 }
 
-.website-name:hover .website-title{
+.website-name:hover .website-title {
     color: #6CC04A;
-}
-
-.menu {
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: black;
-    border-radius: 10px;
-    padding: 0 10px;
+    z-index: 1;
 }
 
 .menu > div {
@@ -87,6 +100,7 @@
 .menu h2:hover {
     background-color: black;
     color:#E30B5C;
+    text-shadow: 2px 2px 5px #E30B5C;
     box-shadow: 2px 2px 6px 6px white;
     z-index: 1;
 }
