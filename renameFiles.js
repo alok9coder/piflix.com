@@ -64,7 +64,12 @@ function renameFiles() {
                 ((tmpName.charCodeAt(j) > 96) && (tmpName.charCodeAt(j) < 123))) {
 
                 strName += tmpName.slice(j, j + 1);
+            } else if ((tmpName.charCodeAt(j) === 32) && 
+                (tmpName.charCodeAt(j - 1) === 32)) {
+                
+                strName += "";
             } else {
+                
                 strName += " ";
             }
         }
@@ -89,4 +94,5 @@ function renameFiles() {
         }
     }
 }
+
 

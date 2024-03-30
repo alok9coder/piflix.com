@@ -9,8 +9,8 @@ const port = 8000;
 var movieList = [];
 
 //const videoPath = `C:/Users/ritus/Downloads/Davinci Resolve 16 - Beginner to Hero Tutorial.mp4`;
-//const videoPath = `/home/pi/Davinci Resolve 16 - Beginner to Hero Tutorial.mp4`;
-const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
+const videoPath = `/home/pi/Davinci Resolve 16 - Beginner to Hero Tutorial.mp4`;
+//const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
 
 const options = {
     key: fs.readFileSync("server.key"),
@@ -19,7 +19,7 @@ const options = {
 
 readFiles();
 const randomNumber = Math.floor(Math.random() * movieList.length);
-const videoPath = movieDir + movieList[randomNumber];
+//const videoPath = movieDir + movieList[randomNumber];
 const movieTitle = movieList[randomNumber].slice(0, movieList[randomNumber].length - 4);
 //const movieTitle = videoPath.slice(25, videoPath.length - 4);
 

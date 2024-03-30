@@ -81,6 +81,7 @@ app.post("/player", (req, res) => {
     res.render("player.ejs", { content: data });
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
+    stream.printStream();
     stream.createStream();
 });
 
@@ -102,6 +103,7 @@ app.post("/anotherplayer", (req, res) => {
     res.render("player.ejs", { content: data });
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
+    stream.printStream();
     stream.createStream();
 });
 
@@ -131,13 +133,15 @@ class MovieStream {
         this.userID = uniqueID;
         this.videoFormat = videoFormat;
         this.moviePath = moviePath;
+    }
 
+    printStream() {
         console.log(this.userID);
         console.log(this.videoFormat);
         console.log(this.moviePath);
     }
 
-    createStream()  {
+    createStream() {
         app.get(`/mediastream/${this.userID}`, (req, res) => {
             let start = 0;
             let end = 0;
@@ -145,7 +149,7 @@ class MovieStream {
             const range = req.headers.range;
             const movieSize = fs.statSync(this.moviePath).size;
             const chunkSize = 1 * 1e6;
-            console.log(req.headers);
+            console.log(req.headers.range);
         
             try {
                 if (start > end) {
@@ -225,13 +229,18 @@ function renameFiles() {
                 ((tmpName.charCodeAt(j) > 96) && (tmpName.charCodeAt(j) < 123))) {
 
                 strName += tmpName.slice(j, j + 1);
+            } else if ((tmpName.charCodeAt(j) === 32) && 
+                (tmpName.charCodeAt(j - 1) === 32)) {
+                
+                strName += "";
             } else {
+                
                 strName += " ";
             }
         }
 
         movieList[i] = strName + tmpFormat;
-        console.log(movieList[i]);
+        //console.log(movieList[i]);
         fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
     }
 
