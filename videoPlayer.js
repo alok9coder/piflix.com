@@ -9,8 +9,8 @@ const port = 8000;
 var movieList = [];
 
 //const videoPath = `C:/Users/ritus/Downloads/Davinci Resolve 16 - Beginner to Hero Tutorial.mp4`;
-/const videoPath = `/home/pi/Davinci Resolve 16 - Beginner to Hero Tutorial.mp4`;
-//const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
+//const videoPath = `/home/pi/Davinci Resolve 16 - Beginner to Hero Tutorial.mp4`;
+const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
 
 const options = {
     key: fs.readFileSync("server.key"),

@@ -1,8 +1,11 @@
 import fs from "node:fs"
 
 const movieDir = "/home/pi/Movies/";
+//const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
+
+
 var movieList = [];
-var prevMovieList = fs.readdirSync(movieDir);
+var prevMovieList = [];
 
 readFiles();
 printFileNames();
@@ -14,6 +17,7 @@ printFileNames();
 
 function readFiles() {
     movieList = fs.readdirSync(movieDir);
+    prevMovieList = fs.readdirSync(movieDir);
 }
 
 function printFileNames() {
@@ -22,18 +26,13 @@ function printFileNames() {
     for (let i = 0; i < movieList.length; i++) {
         console.log(movieList[i]);
     }
+    console.log(``);
 }
 
 function renameFiles() {
+    console.log("");
+
     for (let i = 0; i < movieList.length; i++) {
-
-        if(movieList[i].length > 45) {
-            const tmpFormat = movieList[i].slice(movieList[i].length - 4);
-            const tmpName = movieList[i].slice(0, 40);
-            movieList = tmpName + tmpFormat;
-            fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
-        }
-
         if (movieList[i][0] === "w" &&
             movieList[i][1] === "w" &&
             movieList[i][2] === "w" &&
@@ -48,5 +47,52 @@ function renameFiles() {
             }
         }
     }
+    console.log("");
+
+    readFiles();
+
+    for (let i = 0; i < movieList.length; i++) {
+
+        const tmpFormat = movieList[i].slice(movieList[i].length - 4);
+        const tmpName = movieList[i].slice(0, movieList[i].length - 4);
+
+        let strName = [];
+
+        for (let j = 0; j < tmpName.length; j++) {
+            if (((tmpName.charCodeAt(j) > 47) && (tmpName.charCodeAt(j) < 58)) || 
+                ((tmpName.charCodeAt(j) > 64) && (tmpName.charCodeAt(j) < 94)) || 
+                ((tmpName.charCodeAt(j) > 96) && (tmpName.charCodeAt(j) < 123))) {
+
+                strName += tmpName.slice(j, j + 1);
+            } else if ((tmpName.charCodeAt(j) === 32) && 
+                (tmpName.charCodeAt(j - 1) === 32)) {
+                
+                strName += "";
+            } else {
+                
+                strName += " ";
+            }
+        }
+
+        movieList[i] = strName + tmpFormat;
+        console.log(movieList[i]);
+        fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
+    }
+    console.log("");
+
+    readFiles();
+    
+    const titleLength = 60;
+    for (let i = 0; i < movieList.length; i++) {
+        
+        if(movieList[i].length >= titleLength + 5) {
+            const tmpFormat = movieList[i].slice(movieList[i].length - 4);
+            const tmpName = movieList[i].slice(0, titleLength);
+            movieList[i] = tmpName + tmpFormat;
+            console.log(movieList[i]);
+            fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
+        }
+    }
 }
+
 

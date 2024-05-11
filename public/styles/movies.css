@@ -9,6 +9,7 @@
     font-style: normal;
     font-size: 20px;
     margin-top: 20px;
+    margin-top: 20px;
 }
 
 .movie-all-container > form {
@@ -52,3 +53,4 @@ button:hover > .video-tile-title {
         width: 240px;
     }
 }
+
