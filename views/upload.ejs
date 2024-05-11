@@ -9,14 +9,14 @@
     <br>
     OR BROWSE THOUGH THE MOVIES!
 </h1>
-<div class="upload-container">
+<form class="upload-container" method="post" action="/upload/movie">
     <div class="insert-video">
         <h3>Select the video you want to Upload<h3>
-        <upload class="video-upload"></upload>
+        <input type="file" id="file" name="newFile">
     </div>
     <div class="upload-buttons">
         <button class="upload">UPLOAD</button>
     </div>
-</div>
+</form>
 
 <%- include("partials/footer.ejs") %>

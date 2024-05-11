@@ -1,0 +1,23 @@
+<%- include("partials/header.ejs") %>
+
+<form class="search-container" action="/player" method="post">
+    <h1 class="search-results">
+        Search Results...
+    </h1>
+    <ul class="search-results-list">
+        <% if (locals.content.length > 0) { %>
+            <% for (let i = 0; i < content.length; i++) { %>
+                <hr>
+                <li class="search-item">
+                    <button class="search-result-link" value="<%= content[i] %>" name="thumbnailSelected">
+                        <h1><%= content[i] %></h1>
+                    </button>
+                </li>
+            <% } %>
+        <% } else { %>
+        <h1>No Matching Results were Found!</h1>
+        <% } %>
+    </ul>
+</form>
+
+<%- include("partials/footer.ejs") %>

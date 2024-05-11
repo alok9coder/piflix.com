@@ -1,11 +1,11 @@
 <%- include("partials/header.ejs") %>
 
 <div class="movie-all-container">
-    <form action="/anotherplayer" method="POST">
+    <form action="/player" method="POST">
         <% if (locals.content.MovieList) { %>
             <% for (let i = 0; i < content.MovieList.length; i++) { %>
                 <div class="movie-container">
-                    <button value="<%= i %>" name="thumbnailSelected">
+                    <button value="<%= content.MovieList[i] %>" name="thumbnailSelected">
                         <img class="video-tile" src="images/Media_Player.svg.png" width="144px">
                         <h4 class="video-tile-title"><%= content.MovieList[i].slice(0, 20) %>...</h4>
                     </button>

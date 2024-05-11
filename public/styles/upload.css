@@ -36,3 +36,25 @@
     font-style: normal;
     font-size: 1.7rem;
 }
+
+.upload:hover {
+    background-color: black;
+    color:#6CC04A;
+    text-shadow: 2px 2px 5px #6CC04A;
+    box-shadow: 2px 2px 6px 6px white;
+    z-index: 1;
+}
+
+#file {
+    padding: 10px 10px 10px 20px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 30px;
+    background-color: #6CC04A;
+    color: black;
+    font-weight: 900;
+    font-family: "Darker Grotesque", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 1.7rem;
+}

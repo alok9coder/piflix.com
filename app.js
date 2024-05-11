@@ -12,8 +12,11 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const movieDir = "/home/pi/Movies/";
+//const movieDir = "/home/pi/Movies/";
 //const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
+//const movieDir = "/media/pi/External Drive/Movies/";
+//const movieDir = "/mnt/huge/Movies/";
+const movieDir = "D:/Movies/";
 
 const options = {
     key: fs.readFileSync("server.key"),
@@ -30,7 +33,7 @@ var videoFormat = " ";
 var moviePath = " ";
 
 var movieList = [];
-var prevMovieList= fs.readdirSync(movieDir);
+var prevMovieList = [];
 
 readFiles();
 //printFileNames();
@@ -44,6 +47,8 @@ printFileNames();
 app.get("/", (req, res) => {
     const randomNumber = Math.floor(Math.random() * (movieList.length - 5));
     globalRandomNumber = randomNumber;
+    readFiles();
+    renameFiles();
     
     const data = {
         pageTitle : "piflix",
@@ -52,6 +57,7 @@ app.get("/", (req, res) => {
         MovieTitle3 : movieList[randomNumber + 2],
         MovieTitle4 : movieList[randomNumber + 3],
         MovieTitle5 : movieList[randomNumber + 4],
+	rndNumb: randomNumber,
     };
     
     res.render("index.ejs", { content: data });
@@ -63,31 +69,20 @@ app.get("/home", (req, res) => {
     res.redirect("/");
 });
 
-app.post("/player", (req, res) => {
-    uniqueUserID = Math.floor(Math.random() * 1 * 1e9) + Math.floor(Math.random() * 1 * 1e9);
-    movieNumb = Number(req.body["thumbnailSelected"]);
-    movieName = movieList[globalRandomNumber + movieNumb];
-    videoFormat = movieName.slice(movieName.length - 3);
-    moviePath = movieDir + movieName; // movieName.mp4 or .mkv or .web
-    console.log(moviePath);
+app.post("/search", async (req, res) => {
+    const searchText = req.body["search"];
+    console.log(searchText);
 
-    const data = {
-        pageTitle : "piflix | Media Player",
-        movieTitle : movieName,
-        movieFormat: videoFormat,
-        userID: uniqueUserID,
-    };
-
-    res.render("player.ejs", { content: data });
-
-    var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
-    stream.createStream();
-    stream.playMovie();
+    const searchResults = await searchFiles(searchText);
+    console.log(searchResults);
+    res.render("search.ejs", { content: searchResults });
 });
 
-app.post("/anotherplayer", (req, res) => {
+app.post("/player", (req, res) => {
     uniqueUserID = Math.floor(Math.random() * 1 * 1e9) + Math.floor(Math.random() * 1 * 1e9);
-    movieNumb = Number(req.body["thumbnailSelected"]);
+    const searchSelect = req.body["thumbnailSelected"];
+    const IndexFound = movieList.findIndex((mov) => mov == searchSelect);
+    movieNumb = parseInt(IndexFound);
     movieName = movieList[movieNumb];
     videoFormat = movieName.slice(movieName.length - 3);
     moviePath = movieDir + movieName; // movieName.mp4 or .mkv or .web
@@ -103,11 +98,13 @@ app.post("/anotherplayer", (req, res) => {
     res.render("player.ejs", { content: data });
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
+    stream.printStream();
     stream.createStream();
-    stream.playMovie();
 });
 
 app.get("/movies", (req, res) => {
+    readFiles();
+    renameFiles();
     
     const data = {
         pageTitle : "piflix | Movies",
@@ -124,6 +121,11 @@ app.get("/upload", (req, res) => {
     res.render("upload.ejs", { content: data });
 });
 
+app.post("/upload/movie", (req, res) => {
+    // UPLOAD function still needs to be developed.
+    res.redirect("/movies");
+});
+
 https.createServer(options, app).listen(port, (req, res) => {
     console.log(`Server is Listening on port: ${port}`);
 });
@@ -135,13 +137,13 @@ class MovieStream {
         this.moviePath = moviePath;
     }
 
-    createStream() {
+    printStream() {
         console.log(this.userID);
         console.log(this.videoFormat);
         console.log(this.moviePath);
     }
 
-    playMovie() {
+    createStream() {
         app.get(`/mediastream/${this.userID}`, (req, res) => {
             let start = 0;
             let end = 0;
@@ -149,7 +151,7 @@ class MovieStream {
             const range = req.headers.range;
             const movieSize = fs.statSync(this.moviePath).size;
             const chunkSize = 1 * 1e6;
-            console.log(req.headers);
+            console.log(req.headers.range);
         
             try {
                 if (start > end) {
@@ -181,7 +183,12 @@ class MovieStream {
 }
 
 function readFiles() {
-    movieList = fs.readdirSync(movieDir);
+    try{
+        movieList = fs.readdirSync(movieDir);
+        prevMovieList = fs.readdirSync(movieDir);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function printFileNames() {
@@ -194,18 +201,9 @@ function printFileNames() {
 }
 
 function renameFiles() {
-    const titleLength = 30;
+    console.log("");
 
     for (let i = 0; i < movieList.length; i++) {
-        
-        if(movieList[i].length >= titleLength + 5) {
-            const tmpFormat = movieList[i].slice(movieList[i].length - 4);
-            const tmpName = movieList[i].slice(0, titleLength);
-            movieList[i] = tmpName + tmpFormat;
-            console.log(movieList[i]);
-            fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
-        }
-
         if (movieList[i][0] === "w" &&
             movieList[i][1] === "w" &&
             movieList[i][2] === "w" &&
@@ -220,5 +218,77 @@ function renameFiles() {
             }
         }
     }
+    console.log("");
+
+    readFiles();
+
+    for (let i = 0; i < movieList.length; i++) {
+
+        const tmpFormat = movieList[i].slice(movieList[i].length - 4);
+        const tmpName = movieList[i].slice(0, movieList[i].length - 4);
+
+        let strName = [];
+
+        for (let j = 0; j < tmpName.length; j++) {
+            if (((tmpName.charCodeAt(j) > 47) && (tmpName.charCodeAt(j) < 58)) || 
+                ((tmpName.charCodeAt(j) > 64) && (tmpName.charCodeAt(j) < 94)) || 
+                ((tmpName.charCodeAt(j) > 96) && (tmpName.charCodeAt(j) < 123))) {
+
+                strName += tmpName.slice(j, j + 1);
+            } else if ((tmpName.charCodeAt(j) === 32) && 
+                (tmpName.charCodeAt(j - 1) === 32)) {
+                
+                strName += "";
+            } else {
+                
+                strName += " ";
+            }
+        }
+
+        movieList[i] = strName + tmpFormat;
+        //console.log(movieList[i]);
+        fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
+    }
+
+    readFiles();
+    
+    const titleLength = 60;
+    for (let i = 0; i < movieList.length; i++) {
+        
+        if(movieList[i].length >= titleLength + 5) {
+            const tmpFormat = movieList[i].slice(movieList[i].length - 4);
+            const tmpName = movieList[i].slice(0, titleLength);
+            movieList[i] = tmpName + tmpFormat;
+            console.log(movieList[i]);
+            fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
+        }
+    }
 }
 
+async function searchFiles(name) {
+    let result = [];
+    readFiles();
+    const nameString = name.toLowerCase().split(" ");
+
+    for (let i = 0; i < movieList.length; i++) {
+        const movieString = movieList[i].toLowerCase().split(" ");
+        for (let j = 0; j < movieString.length; j++) {
+            for (let k = 0; k < nameString.length; k++) {
+                if (nameString[k][0] == movieString[j][0] &&
+                    nameString[k][1] == movieString[j][1] &&
+                    nameString[k][2] == movieString[j][2]) {
+                    if (result.length <= 0) {
+                        result.push(movieList[i]);
+                    }
+                    if (result.findIndex((string) => string == movieList[i]) < 0) {
+                        result.push(movieList[i]);
+                    }
+                    //console.log("nameString:\t", nameString[j]);
+                    //console.log("movieSring:\t", movieString[j]);
+                }
+            }
+        }
+    }
+
+    return result;
+}

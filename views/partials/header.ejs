@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles/movies.css">
     <link rel="stylesheet" href="styles/player.css">
     <link rel="stylesheet" href="styles/upload.css">
+    <link rel="stylesheet" href="styles/search.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Georama:wght@100..900&family=MuseoModerno:ital,wght@1,100..900&display=swap" rel="stylesheet">
@@ -40,3 +41,7 @@
             </div>
         </div>
     </div>
+    <form class="search-bar" method="post" action="/search">
+        <input class="search-text" type="text" name="search" placeholder="Search...">
+        <button class="search-submit" type="submit" value="submit">🔍</button>
+    </form>

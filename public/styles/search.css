@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
+
+.search-container {
+    color: #6CC04A;
+    background-color: rgb(25, 25, 25);
+    font-family: "Darker Grotesque", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 1.7rem;
+    border-radius: 10px;
+    margin-block: 10px;
+}
+
+.search-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.search-results {
+    font-size: 5.5rem;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+.search-result-link {
+    background: none;
+    border: none;
+}
+
+.search-result-link > h1 {
+    color: #6CC04A;
+    font-family: "Darker Grotesque", sans-serif;
+    font-size: 3.5rem;
+    font-weight: lighter;
+}
+
+.search-result-link:hover > h1 {
+    color: #E30B5C;
+    text-shadow: 1px 1px 6px #E30B5C;
+}

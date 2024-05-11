@@ -35,6 +35,19 @@
     }
 }
 
+@media (max-width: 700px) {
+    .index-container > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 80%;
+    margin-left: 0;
+}
+
+}
+
 .thumbnail-home > button {
     border: none;
     appearance: none;
@@ -100,12 +113,12 @@ button:hover > .media-icon {
     font-style: normal;
     display: block;
     position: absolute;
-    bottom: 5vh;
-    left: 1vh;
+    bottom: 3vh;
+    left: 1vw;
 }
 
 button:hover > .thumbnail-title {
-    bottom: 5vh;
+    bottom: 2vh;
     left: 1vh;
     font-weight: 500;
     color: white;
