@@ -98,6 +98,7 @@ app.post("/player", (req, res) => {
     res.render("player.ejs", { content: data });
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
+
     stream.printStream();
     stream.createStream();
 });
@@ -152,6 +153,7 @@ class MovieStream {
             const movieSize = fs.statSync(this.moviePath).size;
             const chunkSize = 1 * 1e6;
             console.log(req.headers.range);
+            console.log(req.headers.range);
         
             try {
                 if (start > end) {
@@ -183,7 +185,7 @@ class MovieStream {
 }
 
 function readFiles() {
-    try{
+    try {
         movieList = fs.readdirSync(movieDir);
         prevMovieList = fs.readdirSync(movieDir);
     } catch (error) {
@@ -201,6 +203,7 @@ function printFileNames() {
 }
 
 function renameFiles() {
+    console.log("");
     console.log("");
 
     for (let i = 0; i < movieList.length; i++) {
