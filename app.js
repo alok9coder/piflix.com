@@ -15,8 +15,8 @@ app.use(bodyParser.json());
 //const movieDir = "/home/pi/Movies/";
 //const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
 //const movieDir = "/media/pi/External Drive/Movies/";
-//const movieDir = "/mnt/huge/Movies/";
-const movieDir = "D:/Movies/";
+const movieDir = "/mnt/huge/Movies/";
+//const movieDir = "D:/Movies/";
 
 const options = {
     key: fs.readFileSync("server.key"),
