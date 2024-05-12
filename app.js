@@ -99,7 +99,7 @@ app.post("/player", (req, res) => {
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
 
-    stream.printStream();
+    //stream.printStream();
     stream.createStream();
 });
 
@@ -152,8 +152,7 @@ class MovieStream {
             const range = req.headers.range;
             const movieSize = fs.statSync(this.moviePath).size;
             const chunkSize = 1 * 1e6;
-            console.log(req.headers.range);
-            console.log(req.headers.range);
+            //console.log(req.headers.range);
         
             try {
                 if (start > end) {
@@ -203,8 +202,7 @@ function printFileNames() {
 }
 
 function renameFiles() {
-    console.log("");
-    console.log("");
+    //console.log("");
 
     for (let i = 0; i < movieList.length; i++) {
         if (movieList[i][0] === "w" &&
@@ -221,7 +219,7 @@ function renameFiles() {
             }
         }
     }
-    console.log("");
+    //console.log("");
 
     readFiles();
 
