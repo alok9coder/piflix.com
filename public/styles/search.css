@@ -36,6 +36,7 @@
     font-family: "Darker Grotesque", sans-serif;
     font-size: 3.5rem;
     font-weight: lighter;
+    text-align: left;
 }
 
 .search-result-link:hover > h1 {
