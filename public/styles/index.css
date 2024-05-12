@@ -35,19 +35,6 @@
     }
 }
 
-@media (max-width: 700px) {
-    .index-container > form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 80%;
-    margin-left: 0;
-}
-
-}
-
 .thumbnail-home > button {
     border: none;
     appearance: none;
@@ -123,3 +110,66 @@ button:hover > .thumbnail-title {
     font-weight: 500;
     color: white;
 }
+
+@media (min-height: 701px) {
+    .index-page {
+        height: 80vh;
+    }
+
+    .index-container > form {
+        height: 70vh;
+    }
+
+    .thumbnail-home {
+        height: 60vh;
+    }
+
+    .thumbnail-home > button {
+        height: 60vh;
+    }
+}
+
+@media (max-height: 700px) and (min-height: 501px) {
+    .thumbnail-title {
+        font-size: 1.25rem;
+    }
+
+    .index-page {
+        height: 80vh;
+    }
+
+    .index-container > form {
+        height: 70vh;
+    }
+
+    .thumbnail-home {
+        height: 60vh;
+    }
+
+    .thumbnail-home > button {
+        height: 60vh;
+    }
+}
+
+@media (max-height: 500px) {
+    .thumbnail-title {
+        font-size: 1.0rem;
+    }
+
+    .index-page {
+        height: 80vh;
+    }
+
+    .index-container > form {
+        height: 70vh;
+    }
+
+    .thumbnail-home {
+        height: 60vh;
+    }
+
+    .thumbnail-home > button {
+        height: 60vh;
+    }
+}
+
