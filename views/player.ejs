@@ -6,8 +6,16 @@
             ERROR!!! - Your Browser Does Not Support The Video Format!
         </video>
     </div>
-    <div>
+    <div class="movie-title-and-download">
         <h2 class="movie-display-title"><%= content.movieTitle %></h2>
+        <br>
+        <form method="post">
+            <button formaction="/download" name="movieName"
+                    class="download-button" value="<%= content.movieTitle %>"
+                    download>
+                DOWNLOAD 🔽
+            </button>
+        </form>
     </div>
 </div>
 

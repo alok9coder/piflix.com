@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import fs from "node:fs";
 import https from "https";
-import ffmpeg from "ffmpeg";
 
 const app = express();
 const port = 8000;
@@ -15,17 +14,13 @@ app.use(bodyParser.json());
 //const movieDir = "/home/pi/Movies/";
 //const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
 //const movieDir = "/media/pi/External Drive/Movies/";
-const movieDir = "/mnt/huge/Movies/";
-//const movieDir = "D:/Movies/";
+//const movieDir = "/mnt/huge/Movies/";
+const movieDir = "D:/Movies/";
 
 const options = {
     key: fs.readFileSync("server.key"),
     cert: fs.readFileSync("server.cert"),
 };
-
-var globalRandomNumber = 0;
-
-var uniqueUserID = 0;
 
 var movieNumb = 0;
 var movieName = " ";
@@ -46,7 +41,7 @@ printFileNames();
 
 app.get("/", (req, res) => {
     const randomNumber = Math.floor(Math.random() * (movieList.length - 5));
-    globalRandomNumber = randomNumber;
+
     readFiles();
     renameFiles();
     
@@ -79,14 +74,15 @@ app.post("/search", async (req, res) => {
 });
 
 app.post("/player", (req, res) => {
-    uniqueUserID = Math.floor(Math.random() * 1 * 1e9) + Math.floor(Math.random() * 1 * 1e9);
+    const uniqueUserID = Math.floor(Math.random() * 1 * 1e9) + Math.floor(Math.random() * 1 * 1e9);
+
     const searchSelect = req.body["thumbnailSelected"];
     const IndexFound = movieList.findIndex((mov) => mov == searchSelect);
     movieNumb = parseInt(IndexFound);
     movieName = movieList[movieNumb];
     videoFormat = movieName.slice(movieName.length - 3);
     moviePath = movieDir + movieName; // movieName.mp4 or .mkv or .web
-    console.log(moviePath);
+    console.log("Watch Movie ---> \t", moviePath);
 
     const data = {
         pageTitle : "piflix | Media Player",
@@ -98,9 +94,23 @@ app.post("/player", (req, res) => {
     res.render("player.ejs", { content: data });
 
     var stream = new MovieStream(uniqueUserID, videoFormat, moviePath);
-
-    //stream.printStream();
+    stream.printStream();
     stream.createStream();
+});
+
+app.post("/download", (req, res) => {
+    const uniqueDownloadID = Math.floor(Math.random() * 1 * 1e9) + Math.floor(Math.random() * 1 * 1e9);
+    const downloadName = req.body.movieName;
+    
+    videoFormat = downloadName.slice(downloadName.length - 3);
+    moviePath = movieDir + downloadName; // movieName.mp4 or .mkv or .web
+    console.log("Download ---> \t", moviePath);
+
+    res.redirect(`/download/${uniqueDownloadID}`); 
+
+    var download = new DownloadStream(uniqueDownloadID, videoFormat, moviePath);
+    download.printStream();
+    download.createStream();
 });
 
 app.get("/movies", (req, res) => {
@@ -152,6 +162,7 @@ class MovieStream {
             const range = req.headers.range;
             const movieSize = fs.statSync(this.moviePath).size;
             const chunkSize = 1 * 1e6;
+            //console.log(req.headers);
             //console.log(req.headers.range);
         
             try {
@@ -176,6 +187,58 @@ class MovieStream {
         
                 const stream = fs.createReadStream(this.moviePath, { start, end });
                 stream.pipe(res); 
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    }
+}
+class DownloadStream {
+    constructor(uniqueDownloadID, videoFormat, moviePath) {
+        this.downloadID = uniqueDownloadID;
+        this.videoFormat = videoFormat;
+        this.moviePath = moviePath;
+    }
+
+    printStream() {
+        console.log(this.downloadID);
+        console.log(this.videoFormat);
+        console.log(this.moviePath);
+    }
+
+    createStream() {
+        app.get(`/download/${this.downloadID}`, (req, res) => {
+            let start = 0;
+            let end = 0;
+            let contentLength = 0;
+            const range = req.headers.range;
+            const movieSize = fs.statSync(this.moviePath).size;
+            const chunkSize = 1 * 1e6;
+            console.log(req.headers);
+            console.log(req.headers.range);
+        
+            try {
+                if (start > end) {
+                    start = end - chunkSize;
+                    end = Math.min(start + chunkSize, movieSize - 1 );
+                    contentLength = end - start + 1;
+                } else {
+                    start = Number(range.replace(/\D/g, ""));
+                    end = Math.min(start + chunkSize, movieSize - 1 );
+                    contentLength = end - start + 1;
+                }
+            
+                const headers = {
+                    "Content-Range": `bytes ${start}-${end}/${movieSize}`,
+                    "Accept-Range": "bytes",
+                    "Content-Length": contentLength,
+                    "Content-Type": `video/${this.videoFormat}`,
+                };
+                
+                res.writeHead(206, headers);
+        
+                const downloadStream = fs.createWriteStream(this.moviePath, { start, end });
+                res.pipe(downloadStream); 
             } catch (error) {
                 console.log(error);
             }
@@ -233,9 +296,12 @@ function renameFiles() {
         for (let j = 0; j < tmpName.length; j++) {
             if (((tmpName.charCodeAt(j) > 47) && (tmpName.charCodeAt(j) < 58)) || 
                 ((tmpName.charCodeAt(j) > 64) && (tmpName.charCodeAt(j) < 94)) || 
-                ((tmpName.charCodeAt(j) > 96) && (tmpName.charCodeAt(j) < 123))) {
+                ((tmpName.charCodeAt(j) > 96) && (tmpName.charCodeAt(j) < 123)) ||
+                (tmpName.charCodeAt(j) === 34) ||
+                (tmpName.charCodeAt(j) === 39)) {
 
                 strName += tmpName.slice(j, j + 1);
+
             } else if ((tmpName.charCodeAt(j) === 32) && 
                 (tmpName.charCodeAt(j - 1) === 32)) {
                 
@@ -252,7 +318,8 @@ function renameFiles() {
     }
 
     readFiles();
-    
+
+    /* // Uncomment the code below to reduce the name to 60 characters if longer than that.
     const titleLength = 60;
     for (let i = 0; i < movieList.length; i++) {
         
@@ -263,7 +330,7 @@ function renameFiles() {
             console.log(movieList[i]);
             fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
         }
-    }
+    }*/
 }
 
 async function searchFiles(name) {
