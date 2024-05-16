@@ -43,3 +43,10 @@
     color: #E30B5C;
     text-shadow: 1px 1px 6px #E30B5C;
 }
+
+.search-results-length {
+    color: #E30B5C;
+    text-decoration: none;
+    font-size: 5rem;
+    margin-top: -30px;
+}

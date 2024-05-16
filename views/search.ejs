@@ -4,6 +4,17 @@
     <h1 class="search-results">
         Search Results...
     </h1>
+    <% if (content.length) { %>
+        <h1 class="search-results-length">
+            <%= content.length %> 
+            <% if (content.length === 1) { %>
+                Result Found!
+            <% } else { %>
+                Results Found!
+            <% } %>
+        </h1>
+    <% } %>
+
     <ul class="search-results-list">
         <% if (locals.content.length > 0) { %>
             <% for (let i = 0; i < content.length; i++) { %>
