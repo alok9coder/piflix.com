@@ -66,10 +66,10 @@ app.get("/home", (req, res) => {
 
 app.post("/search", async (req, res) => {
     const searchText = req.body["search"];
-    console.log(searchText);
+    console.log("SEARCH INPUT:\t", searchText);
 
     const searchResults = await searchFiles(searchText);
-    console.log(searchResults);
+    console.log("\nSEARCH RESULTS:\n", searchResults);
     res.render("search.ejs", { content: searchResults });
 });
 
@@ -336,27 +336,48 @@ function renameFiles() {
 async function searchFiles(name) {
     let result = [];
     readFiles();
-    const nameString = name.toLowerCase().split(" ");
+    
+    let pattern = [];
 
+    for (let i = 0; i < name.length; i++) {
+        if (name.charCodeAt(i) !== 32) {
+            pattern += name[i].toLowerCase();
+        }
+    }
+    console.log("pattern: ", pattern);
+    const patternLength = pattern.length;
+    //console.log("patternLength: ", patternLength);
+
+    // New Search Algorithm.
     for (let i = 0; i < movieList.length; i++) {
-        const movieString = movieList[i].toLowerCase().split(" ");
-        for (let j = 0; j < movieString.length; j++) {
-            for (let k = 0; k < nameString.length; k++) {
-                if (nameString[k][0] == movieString[j][0] &&
-                    nameString[k][1] == movieString[j][1] &&
-                    nameString[k][2] == movieString[j][2]) {
-                    if (result.length <= 0) {
-                        result.push(movieList[i]);
-                    }
-                    if (result.findIndex((string) => string == movieList[i]) < 0) {
-                        result.push(movieList[i]);
-                    }
-                    //console.log("nameString:\t", nameString[j]);
-                    //console.log("movieSring:\t", movieString[j]);
+        let movieName = [];
+
+        for (let j = 0; j < movieList[i].length; j++) {
+            if (movieList[i].charCodeAt(j) !== 32) {
+                movieName += movieList[i][j].toLowerCase();
+            }
+        }
+
+        //console.log("movieName: ", movieName);
+
+        for (let k = 0; k < (movieName.length - patternLength - 4); k++) {
+            let strcomp = [];
+
+            for (let l = 0; l < patternLength; l++) {
+                strcomp += movieName[k + l]
+            }
+
+            if (pattern === strcomp) {
+                if (result.length <= 0) {
+                    result.push(movieList[i]);  console.log("A | movieName: ", movieName);
+                } else if (result.findIndex((string) => string === movieList[i]) < 0) {
+                    result.push(movieList[i]);  console.log("B | movieName: ", movieName);
+                } else {
+                    strcomp = [];
                 }
             }
         }
     }
-
+    
     return result;
 }
