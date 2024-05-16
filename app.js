@@ -70,7 +70,7 @@ app.post("/search", async (req, res) => {
 
     const searchResults = await searchFiles(searchText);
     console.log("\nSEARCH RESULTS:\n", searchResults);
-    res.render("search.ejs", { content: searchResults });
+    res.render("search.ejs", { content: searchResults, pattern: searchText, });
 });
 
 app.post("/player", (req, res) => {
