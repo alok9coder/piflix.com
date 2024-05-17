@@ -318,19 +318,6 @@ function renameFiles() {
     }
 
     readFiles();
-
-    /* // Uncomment the code below to reduce the name to 60 characters if longer than that.
-    const titleLength = 60;
-    for (let i = 0; i < movieList.length; i++) {
-        
-        if(movieList[i].length >= titleLength + 5) {
-            const tmpFormat = movieList[i].slice(movieList[i].length - 4);
-            const tmpName = movieList[i].slice(0, titleLength);
-            movieList[i] = tmpName + tmpFormat;
-            console.log(movieList[i]);
-            fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
-        }
-    }*/
 }
 
 async function searchFiles(name) {
