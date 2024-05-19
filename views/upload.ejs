@@ -1,21 +1,15 @@
 <%- include("partials/header.ejs") %>
 
-<h1 style="color: red; text-align: center; margin: 50px 0;">
-    ALERT!!!
-    <br>
-    THIS PAGE IS UNDER DEVELOPMENT!
-    <br>
-    KINDLY GO TO THE HOME PAGE
-    <br>
-    OR BROWSE THOUGH THE MOVIES!
-</h1>
-<form class="upload-container" method="post" action="/upload/movie">
+<form class="upload-container" method="post" action="/upload/movie" enctype="multipart/form-data" accept="video/*">
     <div class="insert-video">
         <h3>Select the video you want to Upload<h3>
         <input type="file" id="file" name="newFile">
     </div>
     <div class="upload-buttons">
-        <button class="upload">UPLOAD ⏏️</button>
+        <button class="upload" type="submit" 
+                onclick="alert('Your File is Uploading!\nPlease Do Not Leave This Page!\nClick OK to Continue.')">
+            UPLOAD ⏏️
+        </button>
     </div>
 </form>
 

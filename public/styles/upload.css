@@ -16,6 +16,7 @@
     align-items: center;
     justify-content: space-evenly;
     padding-block: 25px;
+    height: 100vh;
 }
 
 .upload-buttons {
@@ -57,4 +58,11 @@
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 1.7rem;
+}
+
+#file:hover {
+    background-color: black;
+    color: #6CC04A;
+    box-shadow: white 2px 2px 6px 6px;
+    text-shadow: #6CC04A 2px 2px 5px;
 }

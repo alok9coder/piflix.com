@@ -16,7 +16,7 @@ echo "piflix.com"
 
 echo "HTTPS SERVER RUNNING!"
 
-echo $(ifconfig | grep broadcast | awk '{print $2}')
+echo $(sudo ifconfig | grep broadcast | awk '{print $2}')
 
 sleep 2s
 

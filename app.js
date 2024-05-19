@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import fs from "node:fs";
 import https from "https";
+import multer from "multer";
 
 const app = express();
 const port = 8000;
@@ -16,6 +17,27 @@ app.use(bodyParser.json());
 //const movieDir = "/media/pi/External Drive/Movies/";
 const movieDir = "/mnt/huge/Movies/";
 //const movieDir = "D:/Movies/";
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, movieDir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+const storageL = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, movieDir)
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+const upload = multer({ storage: storage });
 
 const options = {
     key: fs.readFileSync("server.key"),
@@ -52,7 +74,6 @@ app.get("/", (req, res) => {
         MovieTitle3 : movieList[randomNumber + 2],
         MovieTitle4 : movieList[randomNumber + 3],
         MovieTitle5 : movieList[randomNumber + 4],
-	rndNumb: randomNumber,
     };
     
     res.render("index.ejs", { content: data });
@@ -132,8 +153,10 @@ app.get("/upload", (req, res) => {
     res.render("upload.ejs", { content: data });
 });
 
-app.post("/upload/movie", (req, res) => {
+app.post("/upload/movie", upload.single("newFile"), (req, res) => {
     // UPLOAD function still needs to be developed.
+    console.log(req.file);
+    console.log(req.body);
     res.redirect("/movies");
 });
 
