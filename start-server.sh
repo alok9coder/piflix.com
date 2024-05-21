@@ -22,3 +22,7 @@ sleep 2s
 
 cd /home/pi/Media-Streaming-App/ && nodemon app.js & disown
 
+sleep 2s
+
+sudo telebit http 8000 & disown
+
