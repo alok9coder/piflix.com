@@ -11,8 +11,7 @@
         <br>
         <form method="post">
             <button formaction="/download" name="movieName"
-                    class="download-button" value="<%= content.movieTitle %>"
-                    download onmousedown="alert('Your Download Will Start Shortly!')">
+                    class="download-button" id="downloadbutton" value="<%= content.movieTitle %>">
                 DOWNLOAD 🔽
             </button>
         </form>

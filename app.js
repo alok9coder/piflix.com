@@ -15,8 +15,8 @@ app.use(bodyParser.json());
 //const movieDir = "/home/pi/Movies/";
 //const movieDir = "C:/Users/ritus/OneDrive/Documents/Web-Dev/Backend/Media-Streaming-App/Movies/";
 //const movieDir = "/media/pi/External Drive/Movies/";
-const movieDir = "/mnt/huge/Movies/";
-//const movieDir = "D:/Movies/";
+//const movieDir = "/mnt/huge/Movies/";
+const movieDir = "D:/Movies/";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -119,7 +119,7 @@ app.post("/download", (req, res) => {
 
     res.redirect(`/download/${uniqueDownloadID}`); 
 
-    var download = new DownloadStream(uniqueDownloadID, videoFormat, moviePath);
+    var download = new DownloadStream(uniqueDownloadID, videoFormat, moviePath, downloadName);
     download.printStream();
     download.createStream();
 });
@@ -127,7 +127,7 @@ app.post("/download", (req, res) => {
 app.get("/movies", (req, res) => {
     readFiles();
     renameFiles();
-    
+
     const data = {
         pageTitle : "piflix | Movies",
         MovieList : movieList,
@@ -147,6 +147,9 @@ app.post("/upload/movie", upload.single("newFile"), (req, res) => {
     // UPLOAD function still needs to be developed.
     console.log(req.file);
     console.log(req.body);
+    console.log(req.file.originalname);
+    console.log(req.file.size);
+
     res.redirect("/movies");
 });
 
@@ -160,6 +163,7 @@ https.createServer(options, app).listen(port, (req, res) => {
     console.log(`Server is Listening on port: ${port}`);
 });
 */
+
 class MovieStream {
     constructor(uniqueID, videoFormat, moviePath) {
         this.userID = uniqueID;
@@ -213,51 +217,29 @@ class MovieStream {
     }
 }
 class DownloadStream {
-    constructor(uniqueDownloadID, videoFormat, moviePath) {
+    constructor(uniqueDownloadID, videoFormat, moviePath, downloadName) {
         this.downloadID = uniqueDownloadID;
         this.videoFormat = videoFormat;
         this.moviePath = moviePath;
+        this.downloadName = downloadName;
     }
 
     printStream() {
         console.log(this.downloadID);
         console.log(this.videoFormat);
         console.log(this.moviePath);
+        console.log(this.downloadName);
     }
 
     createStream() {
         app.get(`/download/${this.downloadID}`, (req, res) => {
-            let start = 0;
-            let end = 0;
-            let contentLength = 0;
-            const range = req.headers.range;
-            const movieSize = fs.statSync(this.moviePath).size;
-            const chunkSize = 1 * 1e6;
-            console.log(req.headers);
-            console.log(req.headers.range);
-        
             try {
-                if (start > end) {
-                    start = end - chunkSize;
-                    end = Math.min(start + chunkSize, movieSize - 1 );
-                    contentLength = end - start + 1;
-                } else {
-                    start = Number(range.replace(/\D/g, ""));
-                    end = Math.min(start + chunkSize, movieSize - 1 );
-                    contentLength = end - start + 1;
-                }
-            
-                const headers = {
-                    "Content-Range": `bytes ${start}-${end}/${movieSize}`,
-                    "Accept-Range": "bytes",
-                    "Content-Length": contentLength,
-                    "Content-Type": `video/${this.videoFormat}`,
-                };
-                
-                res.writeHead(206, headers);
-        
-                const downloadStream = fs.createReadStream(this.moviePath, { start, end });
-                res.pipe(downloadStream); 
+                const downloadStream = fs.createReadStream(this.moviePath);
+                res.setHeader("Content-Disposition", `attachment;filename=${this.downloadName}`);
+                res.setHeader("Content-Type", `video/${this.videoFormat}`);
+                downloadStream.on("data", (chunk) => res.write(chunk));
+                downloadStream.on("end", () => res.end());
+                downloadStream.on("close", () => console.log(`Download Completed for file: ${this.moviePath}`));
             } catch (error) {
                 console.log(error);
             }
@@ -306,7 +288,6 @@ function renameFiles() {
     readFiles();
 
     for (let i = 0; i < movieList.length; i++) {
-
         const tmpFormat = movieList[i].slice(movieList[i].length - 4);
         const tmpName = movieList[i].slice(0, movieList[i].length - 4);
 
@@ -330,12 +311,10 @@ function renameFiles() {
                 strName += " ";
             }
         }
-
         movieList[i] = strName + tmpFormat;
         //console.log(movieList[i]);
         fs.renameSync(movieDir + prevMovieList[i], movieDir + movieList[i]);
     }
-
     readFiles();
 }
 
@@ -387,3 +366,4 @@ async function searchFiles(name) {
     
     return result;
 }
+
