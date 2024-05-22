@@ -5,7 +5,7 @@ import https from "https";
 import multer from "multer";
 
 const app = express();
-const port = 8000;
+const https_port = 8000;
 
 app.use(express.static("public"));
 
@@ -153,16 +153,12 @@ app.post("/upload/movie", upload.single("newFile"), (req, res) => {
     res.redirect("/movies");
 });
 
-/* */ // Uncomment the code below when using telebit to reroute the request to server running on your localhost at the desired port.
-app.listen(port, () => {
-    console.log(`Server is Listening on port: ${port}`);
-});
 
-/*   // Uncomment the code below when using server on a local machine and want to access through https:// or port-forwarding directly from your router's firewall.
-https.createServer(options, app).listen(port, (req, res) => {
-    console.log(`Server is Listening on port: ${port}`);
+/* */ // Uncomment the code below when using https-server on a local machine and want to access through https:// or port-forwarding directly from your router's firewall.
+https.createServer(options, app).listen(https_port, (req, res) => {
+    console.log(`Server is Listening on port: ${https_port}\thttps`);
 });
-*/
+/* */
 
 class MovieStream {
     constructor(uniqueID, videoFormat, moviePath) {
