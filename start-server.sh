@@ -22,6 +22,8 @@ sleep 2s
 
 cd /home/pi/Media-Streaming-App/ && nodemon app.js & disown
 
+sleep 2s
+
 cd /home/pi/Media-Streaming-App/ && nodemon http-app.js & disown
 
 sleep 2s
