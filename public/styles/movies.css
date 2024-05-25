@@ -20,6 +20,17 @@
     justify-content: space-between;
 }
 
+#mov-avail {
+    border-radius: 30px;
+    padding: 0 10px 10px 10px;
+    text-align: center;
+    color: #E30B5C; 
+    margin: 0 5vw 20px 60vw;
+    background-color: black;
+    font-family: "Darker Grotesque", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+}
 .movie-container {
     display: flex;
     flex-direction: column;

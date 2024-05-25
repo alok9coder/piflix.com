@@ -1,6 +1,7 @@
 <%- include("partials/header.ejs") %>
 
 <div class="movie-all-container">
+    <h1 id="mov-avail">Movies Available: <%= content.MovieList.length %></h1>
     <form action="/player" method="POST">
         <% if (locals.content.MovieList) { %>
             <% for (let i = 0; i < content.MovieList.length; i++) { %>
