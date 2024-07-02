@@ -144,7 +144,7 @@ app.get("/upload", (req, res) => {
 });
 
 app.post("/upload/movie", upload.single("newFile"), (req, res) => {
-    // UPLOAD function still needs to be developed.
+
     console.log(req.file);
     console.log(req.body);
     console.log(req.file.originalname);
@@ -341,7 +341,7 @@ async function searchFiles(name) {
 
         //console.log("movieName: ", movieName);
 
-        for (let k = 0; k < (movieName.length - patternLength - 4); k++) {
+        for (let k = 0; k <= (movieName.length - patternLength - 4); k++) {
             let strcomp = [];
 
             for (let l = 0; l < patternLength; l++) {
